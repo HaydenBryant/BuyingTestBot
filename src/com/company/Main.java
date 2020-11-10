@@ -30,12 +30,30 @@ public class Main {
 
         // wait for popup and close
         Thread.sleep(2000);
+
+        //instantiate actions and jsexecute
         Actions action = new Actions(driver);
-        WebElement closePopup = driver.findElement(By.xpath("/~assets/bby/_img/int/plsvgdef-frontend/svg/Close_Cancel_Line.svg#Close_Cancel_Line"));
-        action.moveToElement(closePopup).perform();
+        JavascriptExecutor js = null;
+
+        //delete popup overlay
+        if (driver instanceof JavascriptExecutor) {
+            js = (JavascriptExecutor) driver;
+        }
+        js.executeScript("return document.getElementsByClassName('c-modal-window email-submission-modal modal-full-width active')[0].remove();");
+
+        //locate searchbar. Type Playstation 5. move to and click
+        WebElement search = driver.findElement(By.id("gh-search-input"));
+        search.sendKeys("Playstation 5");
+        search.sendKeys(Keys.RETURN);
+
+        WebElement ps5 = driver.findElement(By.linkText("Sony - PlayStation 5 Console"));
+        js.executeScript("arguments[0].scrollIntoView();", ps5);
+
+        action.moveToElement(ps5).perform();
         action.click();
         action.perform();
         Thread.sleep(2000);
+        js.executeScript("window.scrollBy(0,500)");
 
 
 //        //locate web element hamburger
@@ -124,8 +142,8 @@ public class Main {
 //        driver.findElement(By.cssSelector("a#a-autoid-0-announce.a-button-text")).click();
 
         //close browser
-        driver.close();
-        driver.quit();
+//        driver.close();
+//        driver.quit();
 
     }
 
