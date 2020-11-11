@@ -6,6 +6,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
@@ -54,6 +56,8 @@ public class Scraper {
         Thread.sleep(2000);
         js.executeScript("window.scrollBy(0,500)");
 
+        waitUntil();
+
 //
 //        //locate and click search bar
 //        WebElement searchBar = driver.findElement(By.id("twotabsearchtextbox"));
@@ -98,4 +102,13 @@ public class Scraper {
 //        driver.close();
 //        driver.quit();
     }
+
+        public static void waitUntil() throws InterruptedException {
+
+            WebDriverWait wait = new WebDriverWait(driver,30);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button")));
+            driver.findElement(By.className("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button")).click();
+        }
+
+
 }
